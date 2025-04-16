@@ -1,34 +1,70 @@
 import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
 import './App.css'
 
 function App() {
-  const [count, setCount] = useState(0)
-
   return (
     <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
+      <Header />
+      <MainWindow />
+      <Footer />
     </>
+  )
+}
+
+function MainWindow(){
+  const [file, setFile] = useState(null);
+  const [status, setStatus] = useState("Waiting for file");
+  const [output, setOutput] = useState(null);
+
+  function handleFileChange(event) {
+    setFile(event.target.files[0]);
+  }
+
+  function handleSubmit(event) {
+    event.preventDefault();
+    if (file) {
+      setStatus("Converting...");
+      // Call the API to convert the file
+      fetch('https://localhost:7105/api/conversion', {
+        method: 'POST',
+        body: file,
+      })
+        .then(response => response.json())
+        .then(data => {
+          setOutput(data.output);
+          setStatus("Conversion complete");
+        })
+        .catch(error => {
+          console.error('Error:', error);
+          setStatus("Error during conversion");
+        });
+    }
+  }
+
+  return (
+    <div>
+      <form onSubmit={handleSubmit}>
+        <input type="file" onChange={handleFileChange} />
+        <button type="submit">Convert</button>
+      </form>
+      <p>{status}</p>
+      {output && <a href={output}>Download Output</a>}
+    </div>
+  );
+}
+
+
+function Header(){
+  return (
+    <header>Bim2Gltf Converter</header>
+  )
+}
+
+function Footer(){
+  return (
+    <footer>
+      <a href="https://github.com/johnelim/BIM2GLTF">Powered by: Xbim, SharpGLTF and GeometryGym</a>
+      </footer>
   )
 }
 

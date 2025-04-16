@@ -1,5 +1,25 @@
 {
   "devDependencies": {
-    "vite": "^6.2.6"
-  }
+    "vite": "^6.3.0"
+  },
+  "dependencies": {
+    "three": "^0.175.0"
+  },
+  "name": "bim2gltf-frontend",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/johnelim/Bim2Gltf-frontend.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/johnelim/Bim2Gltf-frontend/issues"
+  },
+  "homepage": "https://github.com/johnelim/Bim2Gltf-frontend#readme",
+  "description": ""
 }
